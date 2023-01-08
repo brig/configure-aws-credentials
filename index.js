@@ -362,6 +362,8 @@ async function run() {
 
     // Get role credentials if configured to do so
     if (roleToAssume) {
+      console.log(`with roleToAssume`);
+
       const roleCredentials = await retryAndBackoff(
           async () => { return await assumeRole({
             sourceAccountId,
