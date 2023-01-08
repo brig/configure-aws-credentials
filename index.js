@@ -283,6 +283,8 @@ function configureProxy(proxyServer) {
 
 async function run() {
   try {
+    console.log(`RUN!!!!`);
+
     // Get inputs
     const accessKeyId = core.getInput('aws-access-key-id', { required: false });
     const audience = core.getInput('audience', { required: false });
