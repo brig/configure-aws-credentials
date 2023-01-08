@@ -183,6 +183,9 @@ async function exportAccountId(maskAccountId, region) {
     core.setSecret(accountId);
   }
   core.setOutput('aws-account-id', accountId);
+
+  console.log(`exportAccountId: setOutput aws-account-id` + accountId);
+
   return accountId;
 }
 
@@ -283,8 +286,6 @@ function configureProxy(proxyServer) {
 
 async function run() {
   try {
-    console.log(`RUN!!!!`);
-
     // Get inputs
     const accessKeyId = core.getInput('aws-access-key-id', { required: false });
     const audience = core.getInput('audience', { required: false });
@@ -341,6 +342,8 @@ async function run() {
     let sourceAccountId;
     let webIdentityToken;
     if(useGitHubOIDCProvider()) {
+      console.log(`using useGitHubOIDCProvider!!!!`);
+
       webIdentityToken = await core.getIDToken(audience);
       roleDurationSeconds = core.getInput('role-duration-seconds', {required: false}) || DEFAULT_ROLE_DURATION_FOR_OIDC_ROLES;
       // We don't validate the credentials here because we don't have them yet when using OIDC.
@@ -353,6 +356,8 @@ async function run() {
       await validateCredentials(accessKeyId);
 
       sourceAccountId = await exportAccountId(maskAccountId, region);
+
+      console.log(`sourceAccountId=` + sourceAccountId);
     }
 
     // Get role credentials if configured to do so
